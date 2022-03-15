@@ -7,27 +7,27 @@ import java.util.Optional;
 public class StringCalculator {
 	
 	public int split(String str) {
-		
-		int result= 0;
 
-		String s;
+		String[] strList = {};
 
-		s = str.trim();
-
-		if (s.contains("\n") == true ) {
-
-			s.split("\n");
-
-		} else {
-
+		if ( str.contains(",") == true) {
+			strList = str.split(",");
+		} else if ( str.contains(":") == true ) {
+			strList = str.split(":");
 		}
-
-		return result ;
+		
+		return sum(strList);
 	}
 
-	public int sum(String str) {
+	public int sum(String[] str) {
 
-		return 0;
+		int sum = 0;
+
+		for ( String i : str ) {
+			sum += Integer.parseInt(i) ;
+		}
+
+		return sum;
 	}
 	
 }

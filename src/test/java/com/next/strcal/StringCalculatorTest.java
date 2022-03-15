@@ -18,33 +18,36 @@ public class StringCalculatorTest {
 		// when , then
 		assertEquals(3, strcal.split(str));
 		
+		// case 2
+		// given
 		str = "1:7:3";
+		//when, then
 		assertEquals(11, strcal.split(str));
 		
-		// case 2
+		// case 3
 		// given
 		str = "//%\n1%7%8";
 		// when , then
 		assertEquals(16, strcal.split(str));
 
-		// case 3
+		// case 4
 		// given
 		str = "$#//^\n4^7^3";
 		assertEquals(14, strcal.split(str));
 		
-		// case 4
+		// case 5
 		// given
 		str = "-1:6";
 		// when, then
 		assertEquals(new RuntimeException(), strcal.split(str));
 		
-		// case 5
+		// case 6
 		// given
 		str = "//%\n1%-7%8";
 		// when , then
 		assertEquals(new RuntimeException(), strcal.split(str));
 
-		// case 6
+		// case 7
 		// given
 		str = "    //%\n1%-7%8";
 		// when , then
