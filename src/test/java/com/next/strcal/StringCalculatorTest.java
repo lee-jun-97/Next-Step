@@ -11,37 +11,25 @@ public class StringCalculatorTest {
 	void sum() {
 		
 		StringCalculator strcal = new StringCalculator();
-		String str ="";
 		
 		// case 1
-		// given
-		str = "1,2";
-		// when , then
-		assertEquals(3, strcal.cal(str));
+		// given, when , then
+		assertEquals(3, strcal.cal("1,2"));
 		
 		// case 2
-		// given
-		str = "1:7:3";
-		//when, then
-		assertEquals(11, strcal.cal(str));
+		// given, when, then
+		assertEquals(11, strcal.cal("1:7:3"));
 		
 		// case 3
-		// given
-		str = "//%\n1%7%8";
-		// when , then
-		assertEquals(16, strcal.cal(str));
+		// given, when , then
+		assertEquals(16, strcal.cal("//%\n1%7%8"));
 
 		// case 4
-		// given
-		str = "//^\n4^7^3";
-		str = "//&\n4&7&3";
-		// str = "//%\n1%7%8";
-		assertEquals(14, strcal.cal(str));
+		// given, when, then
+		assertEquals(14, strcal.cal("//^\n4^7^3"));
 		
 		// case 5
-		// given
-		// "-1:6"
-		// when, then
+		// given, when, then
 		assertThrows(RuntimeException.class, () -> {
 			String ex = "-1:6";
 			strcal.cal(ex);
@@ -57,14 +45,19 @@ public class StringCalculatorTest {
 		});
 
 		// case 7
-		// given
-		// str = "    //%\n1%-7%8";
-		// when , then
+		// given, when , then
 		assertThrows(RuntimeException.class, () -> {
 			String ex = "    //%\n1%-7%8";
 			strcal.cal(ex);
 		});
 
+		// case 8
+		// given,when, then
+		assertEquals(0, strcal.cal(null));
+
+		// case 9
+		// given, when, then
+		assertEquals(0, strcal.cal(""));
 		
 	}
 	
