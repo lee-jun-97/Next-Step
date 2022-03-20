@@ -16,7 +16,7 @@ public class StringCalculator {
 		Matcher m = Pattern.compile("//(.)\n(.*)").matcher(str.trim());
 		if ( m.find()) {
 			String sep = m.group(1);
-			strList = m.group(2).split(sep);
+			strList = m.group(2).split("\\"+sep);
 		}
 
 		numCheck(strList);

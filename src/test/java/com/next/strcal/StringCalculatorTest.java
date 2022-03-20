@@ -33,9 +33,10 @@ public class StringCalculatorTest {
 
 		// case 4
 		// given
-		// str = "//^\n4^7^3";
-		str = "//%\n1%7%8";
-		assertEquals(16, strcal.cal(str));
+		str = "//^\n4^7^3";
+		str = "//&\n4&7&3";
+		// str = "//%\n1%7%8";
+		assertEquals(14, strcal.cal(str));
 		
 		// case 5
 		// given
