@@ -4,76 +4,72 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 
-import util.HttpRequestUtils;
-import util.HttpRequestUtils.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import util.IOUtils;
 
 public class HttpRequest {
 	
-	Map<String, String> headerMap = new HashMap<>();
-	Map<String, String> bodyMap;
-	String method;
-	String url;
+	private static final Logger log = LoggerFactory.getLogger(HttpRequest.class);
+	
+	private RequestLine line;
+	private RequestParams requestParams = new RequestParams();
+	private HttpHeaders headers;
+	
 	
 	public HttpRequest(InputStream in) {
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		
 		try {
-			String input = br.readLine();
+			BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+
+			line = new RequestLine(createRequestLine(br));
 			
-			method = input.split(" ")[0];
-			
-			String qs ;
-			
-			String[] temp = input.split(" ");
-			
-			// method == GET
-			if(method.equals("GET")) {
-				int index = temp[1].indexOf("?");
-				url = temp[1].substring(0, index);
-				
-				qs = temp[1].substring(index + 1);
-				bodyMap = HttpRequestUtils.parseQueryString(qs);
-			} else if(method.equals("POST")) {
-				url = temp[1];
-			}
-			
-			input = br.readLine();
-			
-			while(!input.equals("")) {
-				Pair pair = HttpRequestUtils.parseHeader(input);
-				headerMap.put(pair.getKey(), pair.getValue());
-				input = br.readLine();
-			}
-			
-			if(method.equals("POST")) {
-				bodyMap = HttpRequestUtils.parseQueryString(br.readLine());
-			}
-			
+			requestParams.addQueryString(line.getQueryString());
+			headers = processHeader(br);
+			requestParams.addBody(IOUtils.readData(br,  headers.getContentLength()));
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		
 	}
 	
-	public String getMethod() {
-		return method;
+	private String createRequestLine(BufferedReader br) throws IOException {
+		String line = br.readLine();
+		
+		if(line == null) {
+			throw new IllegalStateException();
+		}
+		
+		return line;
+	}
+	
+	private HttpHeaders processHeader(BufferedReader br) throws IOException {
+		HttpHeaders headers = new HttpHeaders();
+		String line;
+		while(!(line = br.readLine()).equals("")) {
+			headers.add(line);
+		}
+		
+		return headers;
+	}
+	
+	public HttpMethod getMethod() {
+		return line.getMethod();
 	}
 	
 	public String getPath() {
-		return url;
+		return line.getPath();
 	}
 	
 	public String getHeader(String s) {
-		return headerMap.get(s);
+		return headers.getHeader(s);
 	}
 	
 	public String getParameter(String s) {
-		return bodyMap.get(s);
+		return requestParams.getParameter(s);
 	}
 
 }

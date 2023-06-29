@@ -10,12 +10,12 @@ import org.junit.Test;
 
 public class HttpRequestTest {
 	
-	private String testDirectory = "./src/test";
+	private String testDirectory = "./src/test/resources/";
 	
 	@Test
 	public void request_GET() throws Exception {
 		
-		InputStream in = new FileInputStream(new File(testDirectory + "/HTTP_GET.txt"));
+		InputStream in = new FileInputStream(new File(testDirectory + "HTTP_GET.txt"));
 		HttpRequest request = new HttpRequest(in);
 		
 		assertEquals("GET", request.getMethod());
@@ -28,7 +28,7 @@ public class HttpRequestTest {
 	@Test
 	public void request_POST() throws Exception {
 		
-		InputStream in = new FileInputStream(new File(testDirectory + "/HTTP_POST.txt"));
+		InputStream in = new FileInputStream(new File(testDirectory + "HTTP_POST.txt"));
 		HttpRequest request = new HttpRequest(in);
 		
 		assertEquals("POST", request.getMethod());

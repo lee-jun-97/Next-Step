@@ -51,3 +51,15 @@
 
 ### heroku 서버에 배포 후
 * 
+
+## [ Part 5 ]
+
+### Tomcat 과 직접 구현한 Code가 동일한 역할을 함.
+
+ * Servlet Interface - Controller.interface
+ * AbstractControlelr - HttpServlet
+ 
+ 
+Servlet Container는 서버를 HttpServlet을 상속하는 class를 찾은 후 @WebSerclet Annotation 값을 읽어 URL 과 Servlet을 연결하는 Map을 생성함. &rarr; 이는 RequestMapping의 Map에 Servlet을 추가하고, 요청 URL에 대한 Servlet을 찾아 서비스하는 역할을 함.
+
+> Spring Framework의 MVC 패턴 중 Controller의 역할을 함.
